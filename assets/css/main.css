@@ -1,16 +1,39 @@
 
 @font-face {
-  font-family: alegreya;
-  src: url(/assets/fonts/AlegreyaSans-ExtraBoldItalic.woff2);
+  font-family: "Alegreya Sans Display";
+  src: url("/assets/fonts/AlegreyaSans-ExtraBoldItalic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --bg-color: #faf8f6;
+  --text-color: #292c37;
 }
 
 body {
-    background: #faf8f6;
-    font-family: alegreya, sans-serif;
-    color: #292c37;
+  margin: 0;
+  min-height: 100svh;
+  background: var(--bg-color);
+  font-family: sans-serif;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+main {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
-    text-align: center;
-    padding-top: 16%;
+  margin: 0;
+  text-align: center;
+  font-family: "Alegreya Sans Display", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: clamp(1.9rem, 8vw, 3.5rem);
+  text-wrap: balance;
 }
