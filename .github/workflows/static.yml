@@ -22,15 +22,17 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  quality:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
       - name: Validate HTML
         run: npx --yes html-validate --rule void-style:off index.html
       - name: Check internal links
@@ -39,6 +41,24 @@ jobs:
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           npx --yes linkinator http://127.0.0.1:8080 --recurse --silent --skip "^https?://(?!127\\.0\\.0\\.1:8080).*" --skip "mailto:.*" --skip "tel:.*"
+      - name: Lighthouse CI
+        run: npx --yes @lhci/cli autorun
+      - name: Accessibility audit (pa11y)
+        run: |
+          python3 -m http.server 8080 --directory . &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          npx --yes pa11y-ci --standard WCAG2AA --threshold 0 http://127.0.0.1:8080/
+
+  deploy:
+    needs: quality
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
