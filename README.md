@@ -16,6 +16,7 @@ Then open `http://localhost:8000`.
 
 - `index.html`: page markup and metadata
 - `assets/css/main.css`: typography and layout styles
+- `assets/js/`: theme boot and toggle scripts
 - `assets/fonts/`: local webfont files
 - `.github/workflows/static.yml`: GitHub Pages deployment workflow
 

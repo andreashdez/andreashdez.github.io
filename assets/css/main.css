@@ -1,39 +1,396 @@
+@font-face {
+  font-family: "Alegreya Medium";
+  src: url("/assets/fonts/Alegreya-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
-  font-family: "Alegreya Sans Display";
-  src: url("/assets/fonts/AlegreyaSans-ExtraBoldItalic.woff2") format("woff2");
+  font-family: "Alegreya Display";
+  src: url("/assets/fonts/Alegreya-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Alegreya Display Italic";
+  src: url("/assets/fonts/Alegreya-ExtraBoldItalic.woff2") format("woff2");
   font-weight: 800;
   font-style: italic;
   font-display: swap;
 }
 
 :root {
-  --bg-color: #faf8f6;
-  --text-color: #292c37;
+  --scale: 0.9;
+  --color1: #01161e;
+  --color2: #124559;
+  --color3: #598392;
+  --color4: #aec3b0;
+  --color5: #eff6e0;
+  --color6: #f6faee;
+  --yellow: #ffbe00;
+  --blue: #1b76ff;
+  --text-color-light: var(--color1);
+  --text-color-dark: var(--color5);
+  --bg-color-light: var(--color5);
+  --bg-color-dark: var(--color1);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
+  padding: 0;
   margin: 0;
+  background: light-dark(var(--bg-color-light), var(--bg-color-dark));
+  color: light-dark(var(--text-color-light), var(--text-color-dark));
   min-height: 100svh;
-  background: var(--bg-color);
-  font-family: sans-serif;
-  color: var(--text-color);
-  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 main {
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1;
+  padding: clamp(2rem, 16vw, 32rem);
+  margin: 0;
+  font-family: "Alegreya Medium", serif;
+  font-size: clamp(1rem, 1.4vw, 2rem);
 }
 
 h1 {
-  margin: 0;
-  text-align: center;
-  font-family: "Alegreya Sans Display", sans-serif;
+  font-family: "Alegreya Display", serif;
+  font-size: clamp(1.5rem, 4vw, 4rem);
   font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.85rem 1rem;
+  /*background: light-dark(rgba(255, 255, 255, 0.56), rgba(1, 22, 30, 0.56));*/
+  /*border-bottom: 1px solid light-dark(rgba(1, 22, 30, 0.16), rgba(239, 246, 224, 0.2));*/
+  /*backdrop-filter: blur(8px);*/
+}
+
+.site-logo {
+  display: block;
+  width: clamp(2.25rem, 3vw, 3rem);
+  height: auto;
+  flex-shrink: 0;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+}
+
+.theme-toggle-container {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  /*border-radius: calc(var(--scale) * 34px);*/
+  border: 1.3px solid light-dark(var(--color4), var(--color4));
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: calc(var(--scale) * 60px);
+  height: calc(var(--scale) * 34px);
+  flex-shrink: 0;
+}
+
+.switch #input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--blue);
+  transition: 0.4s;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.sun-moon {
+  position: absolute;
+  content: "";
+  height: calc(var(--scale) * 26px);
+  width: calc(var(--scale) * 26px);
+  left: calc(var(--scale) * 4px);
+  bottom: calc(var(--scale) * 4px);
+  background-color: var(--yellow);
+  transition:
+    transform 0.4s ease,
+    background-color 0.4s ease;
+  isolation: isolate;
+}
+
+:root[data-theme="dark"] #input + .slider {
+  background-color: var(--bg-color-dark);
+}
+
+#input:focus-visible + .slider {
+  box-shadow:
+    0 0 0 calc(var(--scale) * 2px) #ffffff,
+    0 0 0 calc(var(--scale) * 4px) #1a73e8;
+}
+
+:root[data-theme="dark"] #input + .slider .sun-moon {
+  transform: translateX(calc(var(--scale) * 26px));
+  background-color: #ffffff;
+}
+
+.moon-dot {
+  opacity: 0;
+  transition: 0.4s;
+  fill: gray;
+  z-index: 2;
+}
+:root[data-theme="dark"] #input + .slider .sun-moon .moon-dot {
+  opacity: 1;
+}
+
+.slider.round {
+  border-radius: calc(var(--scale) * 34px);
+}
+.slider.round .sun-moon {
+  border-radius: 50%;
+}
+
+#moon-dot-1 {
+  left: calc(var(--scale) * 10px);
+  top: calc(var(--scale) * 3px);
+  position: absolute;
+  width: calc(var(--scale) * 6px);
+  height: calc(var(--scale) * 6px);
+  z-index: 4;
+}
+
+#moon-dot-2 {
+  left: calc(var(--scale) * 2px);
+  top: calc(var(--scale) * 10px);
+  position: absolute;
+  width: calc(var(--scale) * 10px);
+  height: calc(var(--scale) * 10px);
+  z-index: 4;
+}
+
+#moon-dot-3 {
+  left: calc(var(--scale) * 16px);
+  top: calc(var(--scale) * 18px);
+  position: absolute;
+  width: calc(var(--scale) * 3px);
+  height: calc(var(--scale) * 3px);
+  z-index: 4;
+}
+
+.light-ray {
+  position: absolute;
+  z-index: 0;
+  fill: #ffffff;
+  opacity: 0.15;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    fill 0.4s ease;
+}
+
+:root[data-theme="dark"] #input + .slider .sun-moon .light-ray {
+  opacity: 0.1;
+  transform: scale(0.75);
+}
+#light-ray-1 {
+  left: calc(var(--scale) * -8px);
+  top: calc(var(--scale) * -8px);
+  width: calc(var(--scale) * 43px);
+  height: calc(var(--scale) * 43px);
+}
+#light-ray-2 {
+  left: -50%;
+  top: -50%;
+  width: calc(var(--scale) * 55px);
+  height: calc(var(--scale) * 55px);
+}
+#light-ray-3 {
+  left: calc(var(--scale) * -18px);
+  top: calc(var(--scale) * -18px);
+  width: calc(var(--scale) * 60px);
+  height: calc(var(--scale) * 60px);
+}
+
+.cloud-light,
+.cloud-dark {
+  position: absolute;
+  animation-name: cloud-move;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+}
+.cloud-light {
+  fill: #eeeeee;
+}
+.cloud-dark {
+  fill: #cccccc;
+  animation-delay: 1s;
+}
+
+#cloud-1 {
+  left: calc(var(--scale) * 32px);
+  top: calc(var(--scale) * 15px);
+  width: calc(var(--scale) * 40px);
+}
+#cloud-2 {
+  left: calc(var(--scale) * 46px);
+  top: calc(var(--scale) * 10px);
+  width: calc(var(--scale) * 20px);
+}
+#cloud-3 {
+  left: calc(var(--scale) * 20px);
+  top: calc(var(--scale) * 24px);
+  width: calc(var(--scale) * 30px);
+}
+#cloud-4 {
+  left: calc(var(--scale) * 38px);
+  top: calc(var(--scale) * 18px);
+  width: calc(var(--scale) * 40px);
+}
+#cloud-5 {
+  left: calc(var(--scale) * 50px);
+  top: calc(var(--scale) * 14px);
+  width: calc(var(--scale) * 20px);
+}
+#cloud-6 {
+  left: calc(var(--scale) * 24px);
+  top: calc(var(--scale) * 26px);
+  width: calc(var(--scale) * 30px);
+}
+
+@keyframes cloud-move {
+  0% {
+    transform: translateX(0px);
+  }
+  40% {
+    transform: translateX(calc(var(--scale) * 2px));
+  }
+  80% {
+    transform: translateX(calc(var(--scale) * -2px));
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.stars {
+  transform: translateY(calc(var(--scale) * -32px));
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.star {
+  fill: #ffffff;
+  position: absolute;
+  transition: 0.4s;
+  animation-name: star-twinkle;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+:root[data-theme="dark"] #input + .slider .stars {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#star-1 {
+  width: calc(var(--scale) * 20px);
+  top: calc(var(--scale) * 2px);
+  left: calc(var(--scale) * 3px);
+  animation-delay: 0.3s;
+}
+#star-2 {
+  width: calc(var(--scale) * 6px);
+  top: calc(var(--scale) * 16px);
+  left: calc(var(--scale) * 3px);
+}
+#star-3 {
+  width: calc(var(--scale) * 12px);
+  top: calc(var(--scale) * 20px);
+  left: calc(var(--scale) * 10px);
+  animation-delay: 0.6s;
+}
+#star-4 {
+  width: calc(var(--scale) * 18px);
+  top: calc(var(--scale) * 0px);
+  left: calc(var(--scale) * 18px);
+  animation-delay: 1.3s;
+}
+
+@keyframes star-twinkle {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.1);
+  }
+  80% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.name-italic {
+  font-family: "Alegreya Display Italic", serif;
   font-style: italic;
-  font-size: clamp(1.9rem, 8vw, 3.5rem);
-  text-wrap: balance;
+  font-weight: 800;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .slider,
+  .sun-moon,
+  .moon-dot,
+  .light-ray,
+  .stars,
+  .star {
+    transition: none;
+  }
+
+  .cloud-light,
+  .cloud-dark,
+  .star,
+  :root[data-theme="dark"] #input + .slider .sun-moon {
+    animation: none;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --scale: 0.82;
+  }
+
+  .site-nav {
+    padding: 0.75rem;
+  }
+
+  .site-brand {
+    font-size: 0.9rem;
+  }
 }
