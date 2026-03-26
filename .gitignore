@@ -8,3 +8,9 @@
 # Vim swap files
 *.swp
 *.swo
+
+# Node dependencies
+node_modules/
+
+# Lighthouse CI results
+.lighthouseci/

@@ -1,0 +1,16 @@
+{
+  "name": "andreashdez.github.io",
+  "private": true,
+  "scripts": {
+    "quality:html": "html-validate --rule void-style:off index.html",
+    "quality:links": "linkinator http://127.0.0.1:8080 --recurse --silent --skip \"^https?://(?!127\\.0\\.0\\.1:8080).*\" --skip \"mailto:.*\" --skip \"tel:.*\"",
+    "quality:lighthouse": "lhci autorun",
+    "quality:a11y": "pa11y-ci --threshold 0 http://127.0.0.1:8080/"
+  },
+  "devDependencies": {
+    "@lhci/cli": "0.15.1",
+    "html-validate": "10.11.2",
+    "linkinator": "7.6.1",
+    "pa11y-ci": "4.1.0"
+  }
+}

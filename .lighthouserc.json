@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "url": ["http://127.0.0.1:8080/"],
-      "startServerCommand": "python3 -m http.server 8080 --directory .",
+      "startServerCommand": "node scripts/quality-server.mjs 8080",
       "startServerReadyPattern": "Serving HTTP on",
       "numberOfRuns": 2
     },
@@ -12,7 +12,8 @@
         "categories:performance": ["warn", { "minScore": 0.8 }],
         "categories:accessibility": ["error", { "minScore": 0.95 }],
         "categories:best-practices": ["warn", { "minScore": 0.9 }],
-        "categories:seo": ["error", { "minScore": 0.95 }]
+        "categories:seo": ["error", { "minScore": 0.95 }],
+        "network-dependency-tree-insight": "warn"
       }
     },
     "upload": {
