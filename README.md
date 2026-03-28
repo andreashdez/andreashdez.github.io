@@ -32,6 +32,7 @@ npm run quality:a11y
 ## Project structure
 
 - `index.html`: page markup and metadata
+- `404.html`: custom GitHub Pages not-found page
 - `assets/css/main.css`: typography and layout styles
 - `assets/js/`: theme boot and toggle scripts
 - `assets/fonts/`: local webfont files

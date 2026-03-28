@@ -1,23 +1,15 @@
 @font-face {
-  font-family: "Alegreya Medium";
-  src: url("/assets/fonts/Alegreya-Medium.woff2") format("woff2");
-  font-weight: 500;
+  font-family: "Alegreya";
+  src: url("/assets/fonts/Alegreya-VariableFont_wght.woff2") format("woff2-variations");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Alegreya Display";
-  src: url("/assets/fonts/Alegreya-ExtraBold.woff2") format("woff2");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Alegreya Display Italic";
-  src: url("/assets/fonts/Alegreya-ExtraBoldItalic.woff2") format("woff2");
-  font-weight: 800;
+  font-family: "Alegreya Italic";
+  src: url("/assets/fonts/Alegreya-Italic-VariableFont_wght.woff2") format("woff2-variations");
+  font-weight: 100 900;
   font-style: italic;
   font-display: swap;
 }
@@ -46,7 +38,9 @@
 body {
   padding: 0;
   margin: 0;
+  background: var(--bg-color-light);
   background: light-dark(var(--bg-color-light), var(--bg-color-dark));
+  color: var(--text-color-light);
   color: light-dark(var(--text-color-light), var(--text-color-dark));
   min-height: 100svh;
   display: flex;
@@ -61,15 +55,23 @@ main {
   flex: 1;
   padding: clamp(2rem, 16vw, 32rem);
   margin: 0;
-  font-family: "Alegreya Medium", serif;
+  font-family: "Alegreya", serif;
+  font-weight: 400;
   font-size: clamp(1rem, 1.4vw, 2rem);
 }
 
 h1 {
-  font-family: "Alegreya Display", serif;
+  font-weight: 900;
   font-size: clamp(1.5rem, 4vw, 4rem);
-  font-weight: 800;
-  letter-spacing: 0.02em;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 4rem);
+}
+
+.font-italic {
+  font-family: "Alegreya Italic", serif;
 }
 
 .site-nav {
@@ -101,8 +103,8 @@ h1 {
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
-  /*border-radius: calc(var(--scale) * 34px);*/
-  border: 1.3px solid light-dark(var(--color4), var(--color4));
+  border: 2px solid var(--color4);
+  border: 2px solid light-dark(var(--color4), var(--color4));
 }
 
 .switch {
@@ -354,12 +356,6 @@ h1 {
   100% {
     transform: scale(1);
   }
-}
-
-.name-italic {
-  font-family: "Alegreya Display Italic", serif;
-  font-style: italic;
-  font-weight: 800;
 }
 
 @media (prefers-reduced-motion: reduce) {

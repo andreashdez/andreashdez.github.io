@@ -14,7 +14,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="andreashdez" />
-    <meta property="og:title" content="andreashdez" />
+    <meta property="og:title" content="Andreas Hernández Hauser" />
     <meta
       property="og:description"
       content="Personal site of Andreas Hernández Hauser."
@@ -22,13 +22,13 @@
     <meta property="og:url" content="https://andreashdez.com/" />
     <meta
       property="og:image"
-      content="https://andreashdez.com/apple-touch-icon.png"
+      content="https://andreashdez.com/social-preview.png"
     />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="180" />
-    <meta property="og:image:height" content="180" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="andreashdez logo" />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Andreas Hernández Hauser" />
     <meta
       name="twitter:description"
@@ -36,11 +36,43 @@
     />
     <meta
       name="twitter:image"
-      content="https://andreashdez.com/apple-touch-icon.png"
+      content="https://andreashdez.com/social-preview.png"
     />
     <meta name="twitter:image:alt" content="andreashdez logo" />
     <meta name="theme-color" content="#eff6e0" id="theme-color-meta" />
-    <script src="assets/js/theme.js"></script>
+    <script>
+      (function () {
+        var storageKey = "theme";
+        var root = document.documentElement;
+        var lightThemeColor = "#eff6e0";
+        var darkThemeColor = "#01161e";
+        var savedTheme = null;
+
+        try {
+          savedTheme = localStorage.getItem(storageKey);
+        } catch (error) {
+          savedTheme = null;
+        }
+
+        var theme =
+          savedTheme === "dark" || savedTheme === "light"
+            ? savedTheme
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+
+        root.dataset.theme = theme;
+
+        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute(
+            "content",
+            theme === "dark" ? darkThemeColor : lightThemeColor,
+          );
+        }
+      })();
+    </script>
+    <script src="assets/js/theme.js" defer></script>
     <title>Andreas Hernández Hauser</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -48,21 +80,14 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link
       rel="preload"
-      href="/assets/fonts/Alegreya-Medium.woff2"
+      href="/assets/fonts/Alegreya-VariableFont_wght.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/assets/fonts/Alegreya-ExtraBold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/assets/fonts/Alegreya-ExtraBoldItalic.woff2"
+      href="/assets/fonts/Alegreya-Italic-VariableFont_wght.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -277,10 +302,10 @@
       </div>
     </nav>
     <main>
-      <h1>Hi, I'm <span class="name-italic">Andreas</span></h1>
+      <h1>Hi, I'm <span class="font-italic">Andreas</span></h1>
 
       <p>
-        I'm a Software Engineer doing random stuff.
+        I'm a Software Engineer that likes to build stuff.
       </p>
     </main>
   </body>

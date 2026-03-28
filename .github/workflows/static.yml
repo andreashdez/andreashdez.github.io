@@ -58,6 +58,7 @@ jobs:
           npm run quality:a11y
 
   deploy:
+    if: ${{ github.event_name == 'push' }}
     needs: quality
     environment:
       name: github-pages
