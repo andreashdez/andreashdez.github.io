@@ -40,38 +40,7 @@
     />
     <meta name="twitter:image:alt" content="andreashdez logo" />
     <meta name="theme-color" content="#eff6e0" id="theme-color-meta" />
-    <script>
-      (function () {
-        var storageKey = "theme";
-        var root = document.documentElement;
-        var lightThemeColor = "#eff6e0";
-        var darkThemeColor = "#01161e";
-        var savedTheme = null;
-
-        try {
-          savedTheme = localStorage.getItem(storageKey);
-        } catch (error) {
-          savedTheme = null;
-        }
-
-        var theme =
-          savedTheme === "dark" || savedTheme === "light"
-            ? savedTheme
-            : window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
-
-        root.dataset.theme = theme;
-
-        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeColorMeta) {
-          themeColorMeta.setAttribute(
-            "content",
-            theme === "dark" ? darkThemeColor : lightThemeColor,
-          );
-        }
-      })();
-    </script>
+    <script src="assets/js/theme-boot.js"></script>
     <script src="assets/js/theme.js" defer></script>
     <title>Andreas Hernández Hauser</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />

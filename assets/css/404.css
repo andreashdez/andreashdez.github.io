@@ -1,0 +1,50 @@
+main.not-found {
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.status {
+  margin: -0.3em 0 0 0;
+  font-size: clamp(1rem, 16vw, 24rem);
+  color: var(--color3);
+}
+
+.status-definition {
+  margin: 0;
+}
+
+.home-link {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid var(--color5);
+  color: var(--color5);
+  text-decoration: none;
+  font-weight: 600;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.home-link:hover,
+.home-link:focus-visible {
+  background-color: var(--color1);
+  color: var(--color5);
+  background-color: light-dark(var(--color1), var(--color5));
+  color: light-dark(var(--color5), var(--color1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-link {
+    transition: none;
+  }
+
+  .home-link:hover,
+  .home-link:focus-visible {
+    transform: none;
+  }
+}
