@@ -1,7 +1,7 @@
 (function () {
   var storageKey = "theme";
   var root = document.documentElement;
-  var inputId = "input";
+  var inputId = "theme-toggle";
   var lightThemeColor = "#eff6e0";
   var darkThemeColor = "#01161e";
 
@@ -92,6 +92,10 @@
 
     if (!input) {
       return;
+    }
+
+    if (!input.hasAttribute("aria-labelledby") && input.labels.length === 0) {
+      input.setAttribute("aria-label", "Theme");
     }
 
     setTheme(root.dataset.theme || initialTheme, input);

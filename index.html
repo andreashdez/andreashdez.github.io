@@ -39,6 +39,32 @@
       content="https://andreashdez.com/social-preview.png"
     />
     <meta name="twitter:image:alt" content="andreashdez logo" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://andreashdez.com/#person",
+            "name": "Andreas Hernández Hauser",
+            "jobTitle": "Software Engineer",
+            "url": "https://andreashdez.com/",
+            "image": "https://andreashdez.com/social-preview.png",
+            "description": "Personal site of Andreas Hernández Hauser."
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://andreashdez.com/#website",
+            "url": "https://andreashdez.com/",
+            "name": "andreashdez",
+            "description": "Personal site of Andreas Hernández Hauser.",
+            "publisher": {
+              "@id": "https://andreashdez.com/#person"
+            }
+          }
+        ]
+      }
+    </script>
     <meta name="theme-color" content="#eff6e0" id="theme-color-meta" />
     <script src="assets/js/theme-boot.js"></script>
     <script src="assets/js/theme.js" defer></script>
@@ -99,9 +125,9 @@
       </svg>
       <div class="theme-toggle-container">
         <div class="theme-toggle">
-          <label class="switch" for="input">
+          <label class="switch" for="theme-toggle">
             <input
-              id="input"
+              id="theme-toggle"
               type="checkbox"
               role="switch"
               aria-checked="false"
