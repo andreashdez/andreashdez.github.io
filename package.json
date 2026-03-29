@@ -2,6 +2,7 @@
   "name": "andreashdez.github.io",
   "private": true,
   "scripts": {
+    "quality": "npm run quality:html && npm run quality:links && npm run quality:lighthouse && npm run quality:a11y",
     "quality:html": "html-validate --rule void-style:off index.html",
     "quality:links": "linkinator http://127.0.0.1:8080 --recurse --silent --skip \"^https?://(?!127\\.0\\.0\\.1:8080).*\" --skip \"mailto:.*\" --skip \"tel:.*\"",
     "quality:lighthouse": "lhci autorun",

@@ -23,10 +23,7 @@ Then open `http://localhost:8000`.
 Run checks locally from the project root:
 
 ```bash
-npm run quality:html
-npm run quality:links
-npm run quality:lighthouse
-npm run quality:a11y
+npm run quality
 ```
 
 ## Project structure
