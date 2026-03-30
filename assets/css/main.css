@@ -67,18 +67,24 @@ main {
   padding: clamp(2rem, 16vw, 32rem);
   margin: 0;
   font-family: "Alegreya", serif;
-  font-weight: 400;
-  font-size: clamp(1rem, 1.4vw, 2rem);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.8vw, 2rem);
 }
 
 h1 {
+  margin: 0;
   font-weight: 900;
   font-size: clamp(1.5rem, 4vw, 4rem);
 }
 
 h2 {
+  margin: 0;
   font-weight: 700;
-  font-size: clamp(1.5rem, 3vw, 4rem);
+  font-size: clamp(1.3rem, 3vw, 4rem);
+}
+
+p {
+  margin: 0;
 }
 
 .font-italic {
