@@ -2,16 +2,20 @@
   "name": "andreashdez.github.io",
   "private": true,
   "scripts": {
-    "quality": "npm run quality:html && npm run quality:links && npm run quality:lighthouse && npm run quality:a11y",
-    "quality:html": "html-validate --rule void-style:off index.html",
+    "quality": "npm run quality:html && npm run quality:served && npm run quality:lighthouse",
+    "quality:served": "node scripts/quality-server.mjs 8080 & server_pid=$!; trap 'kill \"$server_pid\" 2>/dev/null || true' EXIT; sleep 1; npm run quality:links && npm run quality:a11y",
+    "quality:html": "html-validate --rule void-style:off index.html 404.html",
     "quality:links": "linkinator http://127.0.0.1:8080 --recurse --silent --skip \"^https?://(?!127\\.0\\.0\\.1:8080).*\" --skip \"mailto:.*\" --skip \"tel:.*\"",
     "quality:lighthouse": "lhci autorun",
-    "quality:a11y": "pa11y-ci --config .pa11yci.json --threshold 0 http://127.0.0.1:8080/"
+    "quality:a11y": "pa11y-ci --config .pa11yci.json --threshold 0 http://127.0.0.1:8080/ http://127.0.0.1:8080/404.html"
   },
   "devDependencies": {
     "@lhci/cli": "0.15.1",
     "html-validate": "10.15.0",
     "linkinator": "7.6.1",
-    "pa11y-ci": "4.1.0"
+    "pa11y-ci": "4.1.1"
+  },
+  "overrides": {
+    "tmp": "0.2.5"
   }
 }
