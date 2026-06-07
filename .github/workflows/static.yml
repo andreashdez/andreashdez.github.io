@@ -30,6 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Setup Chrome
+        id: setup-chrome
         uses: browser-actions/setup-chrome@v2
       - name: Validate HTML
         run: npm run quality:html
@@ -42,6 +43,8 @@ jobs:
       - name: Lighthouse CI
         run: npm run quality:lighthouse
       - name: Accessibility audit (pa11y)
+        env:
+          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: |
           python3 -m http.server 8080 --directory . &
           server_pid=$!
