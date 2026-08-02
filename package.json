@@ -3,11 +3,12 @@
   "private": true,
   "scripts": {
     "quality": "npm run quality:html && npm run quality:served && npm run quality:lighthouse",
-    "quality:served": "node scripts/quality-server.mjs 8080 & server_pid=$!; trap 'kill \"$server_pid\" 2>/dev/null || true' EXIT; sleep 1; npm run quality:links && npm run quality:a11y",
+    "quality:served": "node scripts/quality-server.mjs 8080 & server_pid=$!; trap 'kill \"$server_pid\" 2>/dev/null || true' EXIT; sleep 1; npm run quality:links && npm run quality:404 && npm run quality:a11y",
     "quality:html": "html-validate --rule void-style:off index.html 404.html",
     "quality:links": "linkinator http://127.0.0.1:8080 --recurse --silent --skip \"^https?://(?!127\\.0\\.0\\.1:8080).*\" --skip \"mailto:.*\" --skip \"tel:.*\"",
+    "quality:404": "node scripts/check-404.mjs",
     "quality:lighthouse": "lhci autorun",
-    "quality:a11y": "pa11y-ci --config .pa11yci.json --threshold 0 http://127.0.0.1:8080/ http://127.0.0.1:8080/404.html"
+    "quality:a11y": "pa11y-ci --config .pa11yci.json --threshold 0 http://127.0.0.1:8080/ http://127.0.0.1:8080/missing/nested/"
   },
   "devDependencies": {
     "@lhci/cli": "0.15.1",

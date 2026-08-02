@@ -99,6 +99,7 @@ const server = createServer(async (req, res) => {
   try {
     const requestUrl = new URL(req.url || "/", `http://127.0.0.1:${port}`);
     let filePath = resolvePath(requestUrl.pathname);
+    let statusCode = 200;
 
     let fileStats = await stat(filePath).catch(() => null);
 
@@ -108,10 +109,13 @@ const server = createServer(async (req, res) => {
     }
 
     if (!fileStats || !fileStats.isFile()) {
-      res.statusCode = 404;
-      res.setHeader("Content-Type", "text/plain; charset=utf-8");
-      res.end("Not found");
-      return;
+      filePath = join(rootDir, "404.html");
+      fileStats = await stat(filePath).catch(() => null);
+      statusCode = 404;
+    }
+
+    if (!fileStats || !fileStats.isFile()) {
+      throw new Error("404.html is missing");
     }
 
     const fileExt = extname(filePath).toLowerCase();
@@ -123,7 +127,7 @@ const server = createServer(async (req, res) => {
       ? compressBody(fileBuffer, acceptEncoding)
       : { body: fileBuffer, encoding: null };
 
-    res.statusCode = 200;
+    res.statusCode = statusCode;
     res.setHeader("Cache-Control", getCacheControl(fileExt));
     res.setHeader("Content-Type", getContentType(fileExt));
     res.setHeader("Content-Length", String(body.byteLength));
