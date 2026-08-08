@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@lhci/cli": "0.15.1",
-    "html-validate": "11.6.0",
+    "html-validate": "11.6.2",
     "linkinator": "8.0.3",
     "pa11y-ci": "4.1.1"
   },
