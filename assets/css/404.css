@@ -1,47 +1,67 @@
 main.not-found {
   display: grid;
   place-content: center;
-  gap: 1rem;
   text-align: center;
 }
 
-.status {
-  margin: -0.3em 0 -0.3em 0;
+.status-code {
+  margin: 0;
+  line-height: 1;
   font-size: clamp(8rem, 16vw, 24rem);
+  color: light-dark(var(--color2), var(--color4));
+}
+
+.status-definition {
+  margin: 0;
   color: var(--color3);
 }
 
 .home-link {
   display: inline-block;
-  margin-top: 2rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: 999px;
-  border: 2px solid light-dark(var(--color1), var(--color5));
-  color: light-dark(var(--color1), var(--color5));
+  justify-self: center;
+  margin-top: 4em;
   text-decoration: none;
-  font-weight: 500;
-  font-size: clamp(1rem, 1.4vw, 2rem);
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.75em;
+  background: var(--color1);
+  background: light-dark(var(--color1), var(--color5));
 }
 
-.home-link:hover,
-.home-link:focus-visible {
-  background-color: var(--color1);
-  color: var(--color5);
-  background-color: light-dark(var(--color1), var(--color5));
-  color: light-dark(var(--color5), var(--color1));
+.home-link-top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--color1);
+  border: 2px solid light-dark(var(--color1), var(--color5));
+  border-radius: 0.75em;
+  padding: 0.75em 1.5em;
+  background: var(--color5);
+  background: light-dark(var(--color5), var(--color1));
+  color: var(--color1);
+  color: light-dark(var(--color1), var(--color5));
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+
+.home-link:hover .home-link-top,
+.home-link:focus-visible .home-link-top {
+  transform: translateY(-0.33em);
+}
+
+.home-link:active .home-link-top {
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-link {
+  .home-link-top {
     transition: none;
   }
 
-  .home-link:hover,
-  .home-link:focus-visible {
-    transform: none;
+  .home-link:hover .home-link-top,
+  .home-link:focus-visible .home-link-top,
+  .home-link:active .home-link-top {
+    transform: translateY(-0.2em);
   }
 }

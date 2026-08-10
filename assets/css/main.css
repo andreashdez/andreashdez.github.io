@@ -1,15 +1,7 @@
 @font-face {
   font-family: "Alegreya";
-  src: url("/assets/fonts/Alegreya-VariableFont_wght.woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Alegreya Italic";
-  src: url("/assets/fonts/Alegreya-Italic-VariableFont_wght.woff2") format("woff2-variations");
-  font-weight: 100 900;
+  src: url("/assets/fonts/Alegreya-BlackItalic.woff2") format("woff2");
+  font-weight: 900;
   font-style: italic;
   font-display: swap;
 }
@@ -29,6 +21,8 @@
   --bg-color-light: var(--color5);
   --bg-color-dark: var(--color1);
   color-scheme: light;
+  --font-title: Alegreya, serif;
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 :root[data-theme="dark"] {
@@ -53,6 +47,9 @@ body {
   background: light-dark(var(--bg-color-light), var(--bg-color-dark));
   color: var(--text-color-light);
   color: light-dark(var(--text-color-light), var(--text-color-dark));
+  font-family: var(--system-ui);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.8vw, 2rem);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -66,30 +63,25 @@ main {
   flex: 1;
   padding: clamp(2rem, 16vw, 32rem);
   margin: 0;
-  font-family: "Alegreya", serif;
-  font-weight: 500;
-  font-size: clamp(1rem, 1.8vw, 2rem);
 }
 
 h1 {
   margin: 0;
+  font-family: var(--font-title);
   font-weight: 900;
+  font-style: italic;
   font-size: clamp(1.5rem, 4vw, 4rem);
 }
 
 h2 {
   margin: 0;
-  font-weight: 700;
-  font-size: clamp(1.3rem, 3vw, 4rem);
+  font-weight: 600;
+  font-size: clamp(1.2rem, 2.4vw, 3rem);
+  color: var(--color3);
 }
 
 p {
   margin: 0;
-}
-
-.font-italic {
-  font-family: "Alegreya Italic", serif;
-  font-style: italic;
 }
 
 .site-nav {
