@@ -1,7 +1,6 @@
 const baseUrl = process.argv[2] || "http://127.0.0.1:8080";
 const missingPath = "/missing/nested/";
 const assetPaths = [
-  "/assets/js/theme-boot.js",
   "/assets/js/theme.js",
   "/assets/css/main.css",
   "/assets/css/404.css",

@@ -2,25 +2,15 @@
   var storageKey = "theme";
   var root = document.documentElement;
   var inputId = "theme-toggle";
-  var lightThemeColor = "#eff6e0";
-  var darkThemeColor = "#01161e";
-
-  function setThemeColor(theme) {
-    var themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
-    if (!themeColorMeta) {
-      return;
-    }
-
-    themeColorMeta.setAttribute(
-      "content",
-      theme === "dark" ? darkThemeColor : lightThemeColor,
-    );
-  }
+  var themeColors = { light: "#eff6e0", dark: "#01161e" };
+  var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
   function getSavedTheme() {
     try {
-      return localStorage.getItem(storageKey);
+      var savedTheme = localStorage.getItem(storageKey);
+      return savedTheme === "dark" || savedTheme === "light"
+        ? savedTheme
+        : null;
     } catch (error) {
       return null;
     }
@@ -34,76 +24,40 @@
     }
   }
 
-  function getPreferredTheme() {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-
-    return "light";
-  }
-
-  function getInitialTheme() {
-    var savedTheme = getSavedTheme();
-
-    if (savedTheme === "dark" || savedTheme === "light") {
-      return savedTheme;
-    }
-
-    return getPreferredTheme();
-  }
-
-  function setTheme(theme, input) {
+  function setTheme(theme) {
     root.dataset.theme = theme;
-    setThemeColor(theme);
 
-    if (!input) {
-      return;
+    var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute("content", themeColors[theme]);
     }
 
-    input.checked = theme === "dark";
-  }
-
-  var initialTheme = getInitialTheme();
-  setTheme(initialTheme);
-
-  if (window.matchMedia) {
-    var prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-    var onPreferenceChange = function (event) {
-      var savedTheme = getSavedTheme();
-
-      if (savedTheme === "dark" || savedTheme === "light") {
-        return;
-      }
-
-      setTheme(
-        event.matches ? "dark" : "light",
-        document.getElementById(inputId),
-      );
-    };
-
-    if (typeof prefersDark.addEventListener === "function") {
-      prefersDark.addEventListener("change", onPreferenceChange);
-    } else if (typeof prefersDark.addListener === "function") {
-      prefersDark.addListener(onPreferenceChange);
+    var input = document.getElementById(inputId);
+    if (input) {
+      input.checked = theme === "dark";
     }
   }
 
-  window.addEventListener("DOMContentLoaded", function () {
+  setTheme(getSavedTheme() || (prefersDark.matches ? "dark" : "light"));
+
+  prefersDark.addEventListener("change", function (event) {
+    if (!getSavedTheme()) {
+      setTheme(event.matches ? "dark" : "light");
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
     var input = document.getElementById(inputId);
 
     if (!input) {
       return;
     }
 
-    if (!input.hasAttribute("aria-labelledby") && input.labels.length === 0) {
-      input.setAttribute("aria-label", "Theme");
-    }
-
-    setTheme(root.dataset.theme || initialTheme, input);
+    setTheme(root.dataset.theme);
 
     input.addEventListener("change", function () {
       var nextTheme = input.checked ? "dark" : "light";
-      setTheme(nextTheme, input);
+      setTheme(nextTheme);
       saveTheme(nextTheme);
     });
   });

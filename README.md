@@ -31,7 +31,7 @@ npm run quality
 - `index.html`: page markup and metadata
 - `404.html`: custom GitHub Pages not-found page
 - `assets/css/main.css`: typography and layout styles
-- `assets/js/`: theme boot and toggle scripts
+- `assets/js/theme.js`: theme detection and toggle
 - `assets/fonts/`: local webfont files
 - `scripts/build.mjs`: copies the deployable files into `_site/`
 - `package.json`: pinned quality tooling and scripts
