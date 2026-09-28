@@ -1,10 +1,14 @@
 import { createServer } from "node:http";
 import { brotliCompressSync, gzipSync } from "node:zlib";
-import { extname, isAbsolute, join, normalize, relative } from "node:path";
+import { extname, isAbsolute, join, normalize, relative, resolve } from "node:path";
 import { readFile, stat } from "node:fs/promises";
 
-const rootDir = process.cwd();
 const port = Number(process.argv[2] || 8080);
+const rootDir = resolve(process.argv[3] || "_site");
+
+if (!(await stat(rootDir).catch(() => null))?.isDirectory()) {
+  throw new Error(`${rootDir} does not exist, run "npm run build" first`);
+}
 
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",

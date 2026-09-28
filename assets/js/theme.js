@@ -60,9 +60,7 @@
       return;
     }
 
-    var isDark = theme === "dark";
-    input.checked = isDark;
-    input.setAttribute("aria-checked", isDark ? "true" : "false");
+    input.checked = theme === "dark";
   }
 
   var initialTheme = getInitialTheme();
@@ -77,7 +75,10 @@
         return;
       }
 
-      setTheme(event.matches ? "dark" : "light");
+      setTheme(
+        event.matches ? "dark" : "light",
+        document.getElementById(inputId),
+      );
     };
 
     if (typeof prefersDark.addEventListener === "function") {

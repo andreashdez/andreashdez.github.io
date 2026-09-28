@@ -32,24 +32,21 @@ jobs:
       - name: Setup Chrome
         id: setup-chrome
         uses: browser-actions/setup-chrome@v2
+      - name: Build site
+        run: npm run build
       - name: Validate HTML
         run: npm run quality:html
-      - name: Check internal links
-        run: |
-          python3 -m http.server 8080 --directory . &
-          server_pid=$!
-          trap 'kill "$server_pid"' EXIT
-          npm run quality:links
-      - name: Lighthouse CI
-        run: npm run quality:lighthouse
-      - name: Accessibility audit (pa11y)
+      - name: Check links, 404 route, and accessibility
         env:
           PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-        run: |
-          python3 -m http.server 8080 --directory . &
-          server_pid=$!
-          trap 'kill "$server_pid"' EXIT
-          npm run quality:a11y
+        run: npm run quality:served
+      - name: Lighthouse CI
+        run: npm run quality:lighthouse
+      - name: Upload artifact
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: '_site'
 
   deploy:
     if: ${{ github.event_name == 'push' }}
@@ -67,23 +64,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
       - name: Setup Pages
         uses: actions/configure-pages@v6
-      - name: Prepare Pages artifact
-        run: |
-          mkdir _site
-          cp index.html 404.html robots.txt sitemap.xml site.webmanifest _site/
-          cp favicon.ico favicon.svg apple-touch-icon.png social-preview.png _site/
-          cp icon-192.png icon-512.png icon-maskable-192.png icon-maskable-512.png _site/
-          cp -R assets _site/assets
-          touch _site/.nojekyll
-          if [ -f CNAME ]; then cp CNAME _site/CNAME; fi
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

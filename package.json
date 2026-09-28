@@ -2,9 +2,11 @@
   "name": "andreashdez.github.io",
   "private": true,
   "scripts": {
-    "quality": "npm run quality:html && npm run quality:served && npm run quality:lighthouse",
+    "build": "node scripts/build.mjs",
+    "serve": "npm run build && node scripts/quality-server.mjs 8000",
+    "quality": "npm run build && npm run quality:html && npm run quality:served && npm run quality:lighthouse",
     "quality:served": "node scripts/quality-server.mjs 8080 & server_pid=$!; trap 'kill \"$server_pid\" 2>/dev/null || true' EXIT; sleep 1; npm run quality:links && npm run quality:404 && npm run quality:a11y",
-    "quality:html": "html-validate --rule void-style:off index.html 404.html",
+    "quality:html": "html-validate --rule void-style:off _site/index.html _site/404.html",
     "quality:links": "linkinator http://127.0.0.1:8080 --recurse --silent --skip \"^https?://(?!127\\.0\\.0\\.1:8080).*\" --skip \"mailto:.*\" --skip \"tel:.*\"",
     "quality:404": "node scripts/check-404.mjs",
     "quality:lighthouse": "lhci autorun",

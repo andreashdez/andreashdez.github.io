@@ -10,10 +10,10 @@ Install tooling once:
 npm ci
 ```
 
-Run a static server from the project root:
+Build the site into `_site/` and serve it (including the custom 404 page):
 
 ```bash
-python3 -m http.server 8000
+npm run serve
 ```
 
 Then open `http://localhost:8000`.
@@ -33,13 +33,14 @@ npm run quality
 - `assets/css/main.css`: typography and layout styles
 - `assets/js/`: theme boot and toggle scripts
 - `assets/fonts/`: local webfont files
+- `scripts/build.mjs`: copies the deployable files into `_site/`
 - `package.json`: pinned quality tooling and scripts
 - `.github/workflows/static.yml`: GitHub Pages deployment workflow
 - `robots.txt` and `sitemap.xml`: crawler and indexing metadata
 
 ## Deployment
 
-Pushes to `main` trigger `.github/workflows/static.yml`, which deploys the repository as static content to GitHub Pages.
+Pushes to `main` trigger `.github/workflows/static.yml`, which builds `_site/`, runs the quality checks against it, and deploys that same directory to GitHub Pages. New files that should be published must be added to `scripts/build.mjs`.
 
 ## Editing guidelines
 
